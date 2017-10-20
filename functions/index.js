@@ -30,8 +30,6 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
   // Contexts are objects used to track and store conversation state
   const inputContexts = request.body.result.contexts; // https://dialogflow.com/docs/contexts
 
-  var session = admin.database().ref('/sessions/' + request.body.sessionId)
-
   // Get the request source (Google Assistant, Slack, API, etc) and initialize DialogflowApp
   const requestSource = (request.body.originalRequest) ? request.body.originalRequest.source : undefined;
 
@@ -73,9 +71,13 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
   function stepsRepeat (app) {
     let name = app.getArgument(FOOD_NAME);
     app.data = { current_step : current_step };
-    sayStep(app);
-    app.tell('Step ' + session.step);
-    app.tell('Put Jam on the plate again and again');
+    //sayStep(app);
+    var ref = admin.database().ref('/sessions/' + request.body.sessionId + '/step')
+    ref.on("value", function(snapshot) {
+      console.log(snapshot.val());
+      app.tell('Step ' + snapshot.val() + '. Put Jam on the plate again and again');
+    }, function (errorObject) {
+    });
   }
 
   function stepsNext (app) {
@@ -88,6 +90,7 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
   }
 
   function startCooking (app) {
+    var session = admin.database().ref('/sessions/' + request.body.sessionId)
     session.set({step: 1})
     app.tell('OK');
   }
