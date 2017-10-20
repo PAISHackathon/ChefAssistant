@@ -12,6 +12,7 @@ RakuChef will:
 
 # Improvements
 - Offer substitution options for ingredients the user doesn't have
+- Recipe variations (spicyness, gluten free, etc.)
 - Provide timing information for the recipe (preparation time, cooking time, etc.)
 - Unit conversions (e.g. grams to ounces)
 - Timers and alarms
