@@ -47,13 +47,9 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
       ingredients += obj.name + ', ';
       console.log(ingredients);
     });
-    app.tell('Alright, lets start with the ingredients : ' + ingredients);
+    app.tell('Alright, lets start with the ingredients : ' + ingredients + ' Do you have all the ingredients?');
   }
 
-  // Function that confirms if all ingredients are present
-  function confirmIngredients (app) {
-
-  }
 // functions that traverse the steps
   function sayStep (app, prefix) {
     current_step = app.data.current_step;
@@ -82,7 +78,7 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
 
   function stepsRepeat (app) {
     let name = app.getArgument(FOOD_NAME);
-    
+
     var ref = admin.database().ref('/sessions/' + request.body.sessionId + '/step')
     ref.once("value", function(snapshot) {
       sayStep(app)
