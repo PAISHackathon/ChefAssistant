@@ -91,9 +91,14 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
     ref.once("value", function(snapshot) {
       var step =  snapshot.val();
       var session = admin.database().ref('/sessions/' + request.body.sessionId)
-      session.set({step: step + 1})
 
-      sayStep(app);
+      if (recipe_file.steps[step]) {
+        session.set({step: step + 1})
+        sayStep(app);
+      } else {
+        app.tell("That's it. Bon appetit");
+      }
+
     }, function (errorObject) {
 
     });
@@ -102,7 +107,7 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
   function startCooking (app) {
     var session = admin.database().ref('/sessions/' + request.body.sessionId)
     session.set({step: 0})
-    sayStep(app, 'OK. Lets start cooking.');
+    sayStep(app, 'OK. Lets start cooking. ');
   }
 
   // d. build an action map, which maps intent names to functions
