@@ -25,6 +25,9 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
   // Contexts are objects used to track and store conversation state
   const inputContexts = request.body.result.contexts; // https://dialogflow.com/docs/contexts
 
+  console.log(parameters);
+  console.log(inputContexts);
+
   // Get the request source (Google Assistant, Slack, API, etc) and initialize DialogflowApp
   const requestSource = (request.body.originalRequest) ? request.body.originalRequest.source : undefined;
 
