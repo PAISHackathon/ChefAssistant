@@ -105,6 +105,7 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
     var session = admin.database().ref('/sessions/' + request.body.sessionId)
     session.set({step: 0})
     app.tell('OK. Lets start cooking');
+    sayStep(app);
   }
 
   // d. build an action map, which maps intent names to functions
