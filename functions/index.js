@@ -50,12 +50,14 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
   }
 
 // functions that traverse the steps
-  function sayStep (app) {
+  function sayStep (app, prefix) {
     current_step = app.data.current_step;
     var ref = admin.database().ref('/sessions/' + request.body.sessionId + '/step')
     ref.once("value", function(snapshot) {
       var step =  snapshot.val();
-      app.tell('Step ' + (step+1) + '. ' + recipe_file.steps[step]);
+      var talk = 'Step ' + (step+1) + '. ' + recipe_file.steps[step];
+      if (prefix) talk = prefix + talk;
+      app.tell(talk);
     }, function (errorObject) {
     });
   }
@@ -99,8 +101,7 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
   function startCooking (app) {
     var session = admin.database().ref('/sessions/' + request.body.sessionId)
     session.set({step: 0})
-    app.tell('OK. Lets start cooking');
-    sayStep(app);
+    sayStep(app, 'OK. Lets start cooking.');
   }
 
   // d. build an action map, which maps intent names to functions
