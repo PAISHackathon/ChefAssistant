@@ -72,7 +72,7 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
     let name = app.getArgument(FOOD_NAME);
     app.data = { current_step : current_step };
     sayStep(app);
-    app.tell('Put Jam on the plate again and again');
+  //  app.tell('Put Jam on the plate again and again');
   }
 
   function stepsNext (app) {
@@ -81,7 +81,7 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
     if(current_step > recipe_file.ingredients.length) current_step = recipe_file.ingredients.length;
     app.data = { current_step : current_step };
     sayStep(app);
-    app.tell('Flip Jam like rollercoaster');
+  //  app.tell('Flip Jam like rollercoaster');
   }
 
   // d. build an action map, which maps intent names to functions
