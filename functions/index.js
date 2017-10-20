@@ -46,7 +46,7 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
     recipe_file.ingredients.forEach(function(obj) {
       ingredients += obj.name + ', ';
     });
-    app.tell('Alright, lets start with the ingredients : ' + ingredients);
+    app.ask('Alright, lets start with the ingredients : ' + ingredients + '. Would you like to start?');
   }
 
 // functions that traverse the steps
@@ -59,7 +59,7 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
       if (recipe_file.steps[step]) {
         var talk = 'Step ' + (step+1) + '. ' + recipe_file.steps[step];
         if (prefix) talk = prefix + talk;
-        app.tell(talk);
+        app.ask(talk);
       } else {
         app.tell("That's it. Bon appetit!");
       }
