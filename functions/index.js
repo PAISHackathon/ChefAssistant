@@ -44,10 +44,11 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
 
 // Function that lists the ingredients
   function readIngredients (app) {
-    app.tell('Alright, lets start with the ingredients');
+    var ingredients = '';
     recipe_file.ingredients.forEach(function(obj) {
-      app.tell(obj.name);
+      ingredients + = obj.name + '    ';
     });
+    app.tell('Alright, lets start with the ingredients : ' + ingredients);
   }
 
   // Function that confirms if all ingredients are present
