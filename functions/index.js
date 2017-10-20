@@ -56,6 +56,7 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
   }
 // functions that traverse the steps
   function sayStep (app) {
+    current_step = app.data.current_step;
     app.tell(recipe_file.ingredients[current_step]);
   }
 
@@ -63,27 +64,32 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
     let name = app.getArgument(FOOD_NAME);
     current_step -= 1;
     if(current_step < 0) current_step = 0;
+    app.data = { current_step : current_step };
     sayStep(app);
   }
 
   function stepsRepeat (app) {
     let name = app.getArgument(FOOD_NAME);
+    app.data = { current_step : current_step };
     sayStep(app);
-    // app.tell('Put Jam on the plate again and again');
+    app.tell('Put Jam on the plate again and again');
   }
 
   function stepsNext (app) {
     let name = app.getArgument(FOOD_NAME);
     current_step += 1;
     if(current_step > recipe_file.ingredients.length) current_step = recipe_file.ingredients.length;
+    app.data = { current_step : current_step };
     sayStep(app);
-    // app.tell('Flip Jam like rollercoaster');
+    app.tell('Flip Jam like rollercoaster');
   }
 
   // d. build an action map, which maps intent names to functions
   let actionMap = new Map();
   actionMap.set('confirm_food_name.confirm_food_name-yes', readIngredients);
-
+  actionMap.set('steps.previous', stepsPrevious);
+  actionMap.set('steps.repeat', stepsRepeat);
+  actionMap.set('steps.next', stepsNext);
 
 app.handleRequest(actionMap);
 });
