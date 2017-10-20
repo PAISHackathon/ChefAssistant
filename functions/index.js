@@ -57,42 +57,54 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
 // functions that traverse the steps
   function sayStep (app) {
     current_step = app.data.current_step;
-    app.tell(recipe_file.ingredients[current_step]);
+    var ref = admin.database().ref('/sessions/' + request.body.sessionId + '/step')
+    ref.on("value", function(snapshot) {
+      var step =  snapshot.val();
+      app.tell('Step ' + (step+1) + recipe_file.ingredients[step]);
+    }, function (errorObject) {
+    });
   }
 
   function stepsPrevious (app) {
-    let name = app.getArgument(FOOD_NAME);
-    current_step -= 1;
-    if(current_step < 0) current_step = 0;
-    app.data = { current_step : current_step };
-    sayStep(app);
+    var ref = admin.database().ref('/sessions/' + request.body.sessionId + '/step')
+    ref.on("value", function(snapshot) {
+      var step =  snapshot.val();
+      var session = admin.database().ref('/sessions/' + request.body.sessionId)
+      session.set({step: step - 1})
+
+      sayStep(app);
+    }, function (errorObject) {
+
+    });
   }
 
   function stepsRepeat (app) {
     let name = app.getArgument(FOOD_NAME);
-    app.data = { current_step : current_step };
-    //sayStep(app);
+    
     var ref = admin.database().ref('/sessions/' + request.body.sessionId + '/step')
     ref.on("value", function(snapshot) {
-      console.log(snapshot.val());
-      app.tell('Step ' + snapshot.val() + '. Put Jam on the plate again and again');
+      sayStep(app)
     }, function (errorObject) {
     });
   }
 
   function stepsNext (app) {
-    let name = app.getArgument(FOOD_NAME);
-    current_step += 1;
-    if(current_step > recipe_file.ingredients.length) current_step = recipe_file.ingredients.length;
-    app.data = { current_step : current_step };
-    sayStep(app);
-  //  app.tell('Flip Jam like rollercoaster');
+    var ref = admin.database().ref('/sessions/' + request.body.sessionId + '/step')
+    ref.on("value", function(snapshot) {
+      var step =  snapshot.val();
+      var session = admin.database().ref('/sessions/' + request.body.sessionId)
+      session.set({step: step + 1})
+
+      sayStep(app);
+    }, function (errorObject) {
+
+    });
   }
 
   function startCooking (app) {
     var session = admin.database().ref('/sessions/' + request.body.sessionId)
-    session.set({step: 1})
-    app.tell('OK');
+    session.set({step: 0})
+    app.tell('OK. Lets start cooking');
   }
 
   // d. build an action map, which maps intent names to functions
