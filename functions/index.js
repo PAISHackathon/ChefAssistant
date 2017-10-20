@@ -35,13 +35,27 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
       name + '! I hope you like it. See you next time.');
   }
 
+  function stepsPrevious (app) {
+    let name = app.getArgument(FOOD_NAME);
+    app.tell('Stir Jam 15 minutes');
+  }
+
   function stepsRepeat (app) {
     let name = app.getArgument(FOOD_NAME);
     app.tell('Put Jam on the plate again and again');
   }
+
+  function stepsNext (app) {
+    let name = app.getArgument(FOOD_NAME);
+    app.tell('Flip Jam like rollercoaster');
+  }
+
+
   // d. build an action map, which maps intent names to functions
   let actionMap = new Map();
+  actionMap.set('steps.previous', stepsPrevious);
   actionMap.set('steps.repeat', stepsRepeat);
+  actionMap.set('steps.next', stepsNext);
 
 
   app.handleRequest(actionMap);

@@ -1,0 +1,27 @@
+[debug] [2017-10-20T04:58:29.690Z] ----------------------------------------------------------------------
+[debug] [2017-10-20T04:58:29.692Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve --only functions:suggestRecipe
+[debug] [2017-10-20T04:58:29.693Z] CLI Version:   3.13.1
+[debug] [2017-10-20T04:58:29.693Z] Platform:      darwin
+[debug] [2017-10-20T04:58:29.693Z] Node Version:  v8.1.4
+[debug] [2017-10-20T04:58:29.693Z] Time:          Fri Oct 20 2017 13:58:29 GMT+0900 (JST)
+[debug] [2017-10-20T04:58:29.693Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-10-20T04:58:29.703Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-10-20T04:58:29.703Z] > authorizing via signed-in user
+[debug] [2017-10-20T04:58:29.705Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/sample-c817e  
+ Fri Oct 20 2017 13:58:29 GMT+0900 (JST)
+[debug] [2017-10-20T04:58:30.709Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-20T04:58:30.710Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/sample-c817e/tokens  
+ Fri Oct 20 2017 13:58:30 GMT+0900 (JST)
+[debug] [2017-10-20T04:58:31.549Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/derek.bui/Dev/sous-chef'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2017-10-20T04:58:32.023Z] >>> HTTP REQUEST GET https://appengine.googleapis.com/v1/apps/sample-c817e  
+ Fri Oct 20 2017 13:58:32 GMT+0900 (JST)
+[debug] [2017-10-20T04:58:32.023Z] >>> HTTP REQUEST GET https://apikeys.googleapis.com/v1/projects/sample-c817e/apiKeys  
+ Fri Oct 20 2017 13:58:32 GMT+0900 (JST)
+[debug] [2017-10-20T04:58:33.237Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-20T04:58:33.238Z] <<< HTTP RESPONSE 200
+[info] ✔  functions: suggestRecipe: http://localhost:5000/sample-c817e/us-central1/suggestRecipe
