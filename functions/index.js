@@ -73,8 +73,7 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
     let name = app.getArgument(FOOD_NAME);
     app.data = { current_step : current_step };
     sayStep(app);
-    app.tell('Step ' + session.step);
-    app.tell('Put Jam on the plate again and again');
+    app.tell('Step ' + session.get('step') + '. Put Jam on the plate again and again');
   }
 
   function stepsNext (app) {
