@@ -96,9 +96,9 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
     ref.once("value", function(snapshot) {
       var step =  snapshot.val();
       var session = admin.database().ref('/sessions/' + request.body.sessionId)
+      session.set({step: step + 1})
 
       if (recipe_file.steps[step]) {
-        session.set({step: step + 1})
         sayStep(app);
       } else {
         app.tell("That's it. Bon appetit");
