@@ -44,10 +44,11 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
 
 // Function that lists the ingredients
   function readIngredients (app) {
-    app.tell('Alright, lets start with the ingredients');
+    var ingredients = '';
     recipe_file.ingredients.forEach(function(obj) {
-      app.tell(obj.name);
+      ingredients + = obj.name + '    ';
     });
+    app.tell('Alright, lets start with the ingredients : ' + ingredients);
   }
 
   // Function that confirms if all ingredients are present
@@ -82,7 +83,7 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
     if(current_step > recipe_file.ingredients.length) current_step = recipe_file.ingredients.length;
     app.data = { current_step : current_step };
     sayStep(app);
-    app.tell('Flip Jam like rollercoaster');
+  //  app.tell('Flip Jam like rollercoaster');
   }
 
   function startCooking (app) {
