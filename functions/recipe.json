@@ -18,15 +18,20 @@
 			"name": "bacon",
 			"quantity": "200 grams",
 			"substitutes": ["chicken", "shrimp"]
+		},
+		{
+			"name": "parmesan cheese",
+			"quantity": "1 tablespoon",
+			"substitutes": ["cheddar"]
 		}
 	],
 	"steps": [
-		"Fill a large pot 2/3 of the way with water. Add some salt, if desired.",
+		"Fill the pot 2/3 of the way with water. Add some salt, if desired.",
 		"Bring the water to a boil over high heat.",
-		"Add the pasta with ${ingredients[3].name} and stir.",
-		"Reduce to medium or meduim-high.",
+		"Add the pasta and the bacon to the pot.",
+		"Reduce to medium or medium-high.",
 		"Cook for 8 to 10 minutes.",
 		"Pour the pasta through a strainer. Shake out the excess water.",
-		"Return the pasta to the pot and toss it with your favorite sauce."
+		"Serve on a plate and sprinkle with the parmesan cheese."
 	]
 }
