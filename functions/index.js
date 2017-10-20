@@ -55,9 +55,15 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
     var ref = admin.database().ref('/sessions/' + request.body.sessionId + '/step')
     ref.once("value", function(snapshot) {
       var step =  snapshot.val();
-      var talk = 'Step ' + (step+1) + '. ' + recipe_file.steps[step];
-      if (prefix) talk = prefix + talk;
-      app.tell(talk);
+
+      if (recipe_file.steps[step]) {
+        var talk = 'Step ' + (step+1) + '. ' + recipe_file.steps[step];
+        if (prefix) talk = prefix + talk;
+        app.tell(talk);
+      } else {
+        app.tell("That's it. Bon appetit!");
+      }
+
     }, function (errorObject) {
     });
   }
