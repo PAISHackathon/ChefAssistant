@@ -9,3 +9,8 @@ RakuChef will:
 - Suggest recipes
 - Confirm that the user has all the necessary ingredients
 - Guide the user through the recipe step-by-step
+
+# Improvements
+- Offer substitution options for ingredients
+- Provide timing information for the recipe (preparation time, cooking time, etc.)
+
