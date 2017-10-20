@@ -6,7 +6,8 @@ var current_step = 0;
 process.env.DEBUG = 'actions-on-google:*';
 const App = require('actions-on-google').DialogflowApp;
 const functions = require('firebase-functions');
-
+const admin = require('firebase-admin');
+admin.initializeApp(functions.config().firebase);
 
 // a. the action name from the make_name Dialogflow intent
 const NAME_ACTION = 'cook_food';
@@ -29,8 +30,7 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
   // Contexts are objects used to track and store conversation state
   const inputContexts = request.body.result.contexts; // https://dialogflow.com/docs/contexts
 
-  console.log(parameters);
-  console.log(inputContexts);
+  var session = admin.database().ref('/sessions/' + request.body.sessionId)
 
   // Get the request source (Google Assistant, Slack, API, etc) and initialize DialogflowApp
   const requestSource = (request.body.originalRequest) ? request.body.originalRequest.source : undefined;
@@ -73,7 +73,8 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
     let name = app.getArgument(FOOD_NAME);
     app.data = { current_step : current_step };
     sayStep(app);
-  //  app.tell('Put Jam on the plate again and again');
+    app.tell('Step ' + session.step);
+    app.tell('Put Jam on the plate again and again');
   }
 
   function stepsNext (app) {
@@ -85,12 +86,17 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
   //  app.tell('Flip Jam like rollercoaster');
   }
 
+  function startCooking (app) {
+    session.set({step: 1})
+  }
+
   // d. build an action map, which maps intent names to functions
   let actionMap = new Map();
   actionMap.set('confirm_food_name.confirm_food_name-yes', readIngredients);
   actionMap.set('steps.previous', stepsPrevious);
   actionMap.set('steps.repeat', stepsRepeat);
   actionMap.set('steps.next', stepsNext);
+  actionMap.set('steps.start', startCooking);
 
 app.handleRequest(actionMap);
 });
