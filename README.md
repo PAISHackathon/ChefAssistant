@@ -1,11 +1,11 @@
-# ![](google-home.png)RakuChef
+# ![](google-home.png)PandaChef
 A Google Home app that can assist you while cooking!
 
 # Get Started
-Start by saying `OK Google, let me talk to RakuChef.`
+Start by saying `OK Google, let me talk to PandaChef.`
 
 # Features
-RakuChef will:
+PandaChef will:
 - Suggest recipes
 - Confirm that the user has all the necessary ingredients
 - Guide the user through the recipe step-by-step
