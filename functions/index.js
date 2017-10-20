@@ -60,7 +60,7 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
     var ref = admin.database().ref('/sessions/' + request.body.sessionId + '/step')
     ref.on("value", function(snapshot) {
       var step =  snapshot.val();
-      app.tell('Step ' + (step+1) + recipe_file.ingredients[step]);
+      app.tell('Step ' + (step+1) '. ' + recipe_file.steps[step]);
     }, function (errorObject) {
     });
   }
