@@ -10,6 +10,7 @@ const functions = require('firebase-functions');
 
 // a. the action name from the make_name Dialogflow intent
 const NAME_ACTION = 'cook_food';
+const CONFIRM_FOOD_ACTION = 'confirm_food_name';
 // b. the parameters that are parsed from the cook_food intent
 const FOOD_NAME = 'name';
 
@@ -41,6 +42,18 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
       name + '! I hope you like it. See you next time.');
   }
 
+// Function that lists the ingredients
+  function readIngredients (app) {
+    app.tell('Alright, lets start with the ingredients');
+    recipe_file.ingredients.forEach(function(obj) {
+      app.tell(obj.name);
+    });
+  }
+
+  // Function that confirms if all ingredients are present
+  function confirmIngredients (app) {
+
+  }
 // functions that traverse the steps
   function sayStep (app) {
     app.tell(recipe_file.ingredients[current_step]);
@@ -61,7 +74,7 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
 
   function stepsNext (app) {
     let name = app.getArgument(FOOD_NAME);
-    current_step -= 1;
+    current_step += 1;
     if(current_step > recipe_file.ingredients.length) current_step = recipe_file.ingredients.length;
     sayStep(app);
     // app.tell('Flip Jam like rollercoaster');
@@ -69,10 +82,8 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
 
   // d. build an action map, which maps intent names to functions
   let actionMap = new Map();
-  actionMap.set('steps.previous', stepsPrevious);
-  actionMap.set('steps.repeat', stepsRepeat);
-  actionMap.set('steps.next', stepsNext);
+  actionMap.set('confirm_food_name.confirm_food_name-yes', readIngredients);
 
 
-  app.handleRequest(actionMap);
+app.handleRequest(actionMap);
 });
