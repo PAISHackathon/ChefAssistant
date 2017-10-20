@@ -89,6 +89,7 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
 
   function startCooking (app) {
     session.set({step: 1})
+    app.tell('OK');
   }
 
   // d. build an action map, which maps intent names to functions
