@@ -1,0 +1,32 @@
+{
+	"name": "pasta",
+	"ingredients:": [{
+			"name": "large pot",
+			"quantity": "",
+			"substitutes": []
+		},
+		{
+			"name": "pasta",
+			"substitutes": []
+		},
+		{
+			"name": "salt",
+			"quantity": "2 tablespoons",
+			"substitutes": ["option 1", "option 2", "option 3"]
+		},
+		{
+			"name": "bacon",
+			"quantity": "200 grams",
+			"substitutes": ["chicken", "shrimp"]
+		}
+	],
+	"steps": [
+		"Fill a large pot 2/3 of the way with water. Add some salt, if desired.",
+		"Bring the water to a boil over high heat.",
+		"Add the pasta with ${ingredients[3].name} and stir.",
+		"Reduce to medium or meduim-high.",
+		"Cook for 8 to 10 minutes.",
+		"Pour the pasta through a strainer. Shake out the excess water.",
+		"Return the pasta to the pot and toss it with your favorite sauce."
+	]
+}
