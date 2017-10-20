@@ -58,7 +58,7 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
   function sayStep (app) {
     current_step = app.data.current_step;
     var ref = admin.database().ref('/sessions/' + request.body.sessionId + '/step')
-    ref.on("value", function(snapshot) {
+    ref.once("value", function(snapshot) {
       var step =  snapshot.val();
       app.tell('Step ' + (step+1) + '. ' + recipe_file.steps[step]);
     }, function (errorObject) {
@@ -67,7 +67,7 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
 
   function stepsPrevious (app) {
     var ref = admin.database().ref('/sessions/' + request.body.sessionId + '/step')
-    ref.on("value", function(snapshot) {
+    ref.once("value", function(snapshot) {
       var step =  snapshot.val();
       var session = admin.database().ref('/sessions/' + request.body.sessionId)
       session.set({step: step - 1})
@@ -82,7 +82,7 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
     let name = app.getArgument(FOOD_NAME);
     
     var ref = admin.database().ref('/sessions/' + request.body.sessionId + '/step')
-    ref.on("value", function(snapshot) {
+    ref.once("value", function(snapshot) {
       sayStep(app)
     }, function (errorObject) {
     });
@@ -90,7 +90,7 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
 
   function stepsNext (app) {
     var ref = admin.database().ref('/sessions/' + request.body.sessionId + '/step')
-    ref.on("value", function(snapshot) {
+    ref.once("value", function(snapshot) {
       var step =  snapshot.val();
       var session = admin.database().ref('/sessions/' + request.body.sessionId)
       session.set({step: step + 1})
