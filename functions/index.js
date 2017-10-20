@@ -46,7 +46,7 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
   function readIngredients (app) {
     var ingredients = '';
     recipe_file.ingredients.forEach(function(obj) {
-      ingredients += obj.name + '    ';
+      ingredients += obj.name + ', ';
       console.log(ingredients);
     });
     app.tell('Alright, lets start with the ingredients : ' + ingredients);
