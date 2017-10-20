@@ -16,6 +16,17 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
   console.log('Request headers: ' + JSON.stringify(request.headers));
   console.log('Request body: ' + JSON.stringify(request.body));
 
+  // An action is a string used to identify what needs to be done in fulfillment
+  let action = request.body.result.action; // https://dialogflow.com/docs/actions-and-parameters
+
+  // Parameters are any entites that Dialogflow has extracted from the request.
+  const parameters = request.body.result.parameters; // https://dialogflow.com/docs/actions-and-parameters
+
+  // Contexts are objects used to track and store conversation state
+  const inputContexts = request.body.result.contexts; // https://dialogflow.com/docs/contexts
+
+  // Get the request source (Google Assistant, Slack, API, etc) and initialize DialogflowApp
+  const requestSource = (request.body.originalRequest) ? request.body.originalRequest.source : undefined;
 
 // c. The function that suggests recipe
   function recipe (app) {
