@@ -1,5 +1,8 @@
 'use strict';
 
+
+var recipe_file = require('./recipe.json');
+var current_step = 0;
 process.env.DEBUG = 'actions-on-google:*';
 const App = require('actions-on-google').DialogflowApp;
 const functions = require('firebase-functions');
@@ -26,6 +29,9 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
   // Contexts are objects used to track and store conversation state
   const inputContexts = request.body.result.contexts; // https://dialogflow.com/docs/contexts
 
+  console.log(parameters);
+  console.log(inputContexts);
+
   // Get the request source (Google Assistant, Slack, API, etc) and initialize DialogflowApp
   const requestSource = (request.body.originalRequest) ? request.body.originalRequest.source : undefined;
 
@@ -39,15 +45,41 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
 // Function that lists the ingredients
   function readIngredients (app) {
     app.tell('Alright, lets start with the ingredients');
-    // Logic to read from json
-    //var data
-
+    recipe_file.ingredients.forEach(function(obj) {
+      app.tell(obj.name);
+    });
   }
 
   // Function that confirms if all ingredients are present
-    function confirmIngredients (app) {
+  function confirmIngredients (app) {
 
-    }
+  }
+// functions that traverse the steps
+  function sayStep (app) {
+    app.tell(recipe_file.ingredients[current_step]);
+  }
+
+  function stepsPrevious (app) {
+    let name = app.getArgument(FOOD_NAME);
+    current_step -= 1;
+    if(current_step < 0) current_step = 0;
+    sayStep(app);
+  }
+
+  function stepsRepeat (app) {
+    let name = app.getArgument(FOOD_NAME);
+    sayStep(app);
+    // app.tell('Put Jam on the plate again and again');
+  }
+
+  function stepsNext (app) {
+    let name = app.getArgument(FOOD_NAME);
+    current_step += 1;
+    if(current_step > recipe_file.ingredients.length) current_step = recipe_file.ingredients.length;
+    sayStep(app);
+    // app.tell('Flip Jam like rollercoaster');
+  }
+
   // d. build an action map, which maps intent names to functions
   let actionMap = new Map();
   actionMap.set('confirm_food_name.confirm_food_name-yes', readIngredients);
