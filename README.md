@@ -11,6 +11,7 @@ RakuChef will:
 - Guide the user through the recipe step-by-step
 
 # Improvements
-- Offer substitution options for ingredients
+- Offer substitution options for ingredients the user doesn't have
 - Provide timing information for the recipe (preparation time, cooking time, etc.)
-
+- Unit conversions (e.g. grams to ounces)
+- Timers and alarms
