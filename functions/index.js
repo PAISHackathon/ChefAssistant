@@ -1,5 +1,8 @@
 'use strict';
 
+
+var recipe_file = require('./recipe.json');
+var current_step = 0;
 process.env.DEBUG = 'actions-on-google:*';
 const App = require('actions-on-google').DialogflowApp;
 const functions = require('firebase-functions');
@@ -35,21 +38,31 @@ exports.suggestRecipe = functions.https.onRequest((request, response) => {
       name + '! I hope you like it. See you next time.');
   }
 
+// functions that traverse the steps
+  function sayStep (app) {
+    app.tell(recipe_file.ingredients[current_step]);
+  }
+
   function stepsPrevious (app) {
     let name = app.getArgument(FOOD_NAME);
-    app.tell('Stir Jam 15 minutes');
+    current_step -= 1;
+    if(current_step < 0) current_step = 0;
+    sayStep(app);
   }
 
   function stepsRepeat (app) {
     let name = app.getArgument(FOOD_NAME);
-    app.tell('Put Jam on the plate again and again');
+    sayStep(app);
+    // app.tell('Put Jam on the plate again and again');
   }
 
   function stepsNext (app) {
     let name = app.getArgument(FOOD_NAME);
-    app.tell('Flip Jam like rollercoaster');
+    current_step -= 1;
+    if(current_step > recipe_file.ingredients.length) current_step = recipe_file.ingredients.length;
+    sayStep(app);
+    // app.tell('Flip Jam like rollercoaster');
   }
-
 
   // d. build an action map, which maps intent names to functions
   let actionMap = new Map();
