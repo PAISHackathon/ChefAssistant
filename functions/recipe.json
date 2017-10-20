@@ -23,8 +23,8 @@
 	"steps": [
 		"Fill a large pot 2/3 of the way with water. Add some salt, if desired.",
 		"Bring the water to a boil over high heat.",
-		"Add the pasta with ${ingredients[3].name} and stir.",
-		"Reduce to medium or meduim-high.",
+		"Add the pasta with salt and stir.",
+		"Reduce to medium or medium high.",
 		"Cook for 8 to 10 minutes.",
 		"Pour the pasta through a strainer. Shake out the excess water.",
 		"Return the pasta to the pot and toss it with your favorite sauce."
